@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion Administrateur - CELCHECK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 350px;
+        }
+
+        h2 {
+            color: #004080;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input[type="submit"] {
+            background-color: #004080;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        img.logo {
+            width: 80px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="Logo CELPAID" class="logo">
+        <h2>Connexion Admin</h2>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <input type="text" name="username" placeholder="Nom d'utilisateur" required><br>
+            <input type="password" name="password" placeholder="Mot de passe" required><br>
+            <input type="submit" value="Se connecter">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Uploader un fichier Excel - CELCHECK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .upload-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        h2 {
+            color: #004080;
+        }
+
+        input[type="file"] {
+            margin-top: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #004080;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #006600;
+        }
+
+        .error {
+            color: red;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #004080;
+            font-weight: bold;
+        }
+
+        img.logo {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="Logo CELPAID" class="logo">
+        <h2>Téléversement du fichier Excel</h2>
+
+        {% if message %}
+            <p class="message {% if 'Erreur' in message %}error{% endif %}">{{ message }}</p>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".xlsx" required><br>
+            <input type="submit" value="Téléverser">
+        </form>
+
+        <a href="{{ url_for('index') }}">← Retour à la page d'accueil</a>
+    </div>
+</body>
+</html>

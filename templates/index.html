@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>CELCHECK - Vérification de clients</title>
     <style>
         body {
@@ -11,7 +11,7 @@
             padding: 0;
         }
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 40px auto;
             background: white;
             padding: 30px;
@@ -54,36 +54,62 @@
             color: green;
         }
         .message.warning {
-            color: red;
+            color: #d93025; /* rouge vif plus visible */
+        }
+        .clients-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .client-block {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+        .client-block ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .client-block li {
+            padding: 4px 0;
+        }
+        .client-block li strong {
+            color: #004080;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="CELPAID" class="logo">
+        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="CELPAID" class="logo" />
         <h1>Bienvenue sur CELCHECK</h1>
         <p>Vérifiez si un client est conforme avant la création de son compte.</p>
-        
-        <form method="POST">
-            <input type="text" name="nom" placeholder="Nom du client" required><br>
-            <input type="text" name="prenom" placeholder="Prénom du client" required><br>
+
+        <form method="POST" autocomplete="off">
+            <input type="text" name="nom" placeholder="Nom du client" required /><br />
+            <input type="text" name="prenom" placeholder="Prénom(s) du client (entiers ou partiels)" required /><br />
             <button type="submit">Vérifier</button>
         </form>
 
         {% if message %}
-            <div class="message {% if '✅' in message %}ok{% elif '⚠️' in message or '❌' in message %}warning{% endif %}">
+            <div class="message {% if '✅' in message %}ok{% else %}warning{% endif %}">
                 {{ message }}
             </div>
         {% endif %}
 
-        {% if client %}
-            <div style="margin-top: 20px; text-align: left;">
-                <h3>Informations du client :</h3>
-                <ul>
-                    {% for key, value in client.items() %}
-                        <li><strong>{{ key }} :</strong> {{ value }}</li>
-                    {% endfor %}
-                </ul>
+        {% if clients %}
+            <div class="clients-list">
+                <h3>Résultats :</h3>
+                {% for client in clients %}
+                    <div class="client-block">
+                        <ul>
+                            {% for key, value in client.items() %}
+                                <li><strong>{{ key }} :</strong> {{ value }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
             </div>
         {% endif %}
     </div>
