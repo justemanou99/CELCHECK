@@ -60,7 +60,7 @@ def upload_file():
 
             # Recharger les données
             try:
-                data = pd.read_excel(filepath, header=1)
+                data = pd.read_excel(filepath, header=0)
                 data.columns = [unicodedata.normalize("NFKD", col).encode("ASCII", "ignore").decode("utf-8").strip().replace('\u00a0', '') for col in data.columns]
                 data = data.rename(columns={"Prenom": "Prénom"})
                 message = 'Fichier mis à jour avec succès !'
@@ -74,7 +74,7 @@ def upload_file():
 
 # === CHARGEMENT INITIAL DE LA BASE
 try:
-    data = pd.read_excel("clients_non_conformes.xlsx", header=1)
+    data = pd.read_excel("clients_non_conformes.xlsx", header=0)
     data.columns = [unicodedata.normalize("NFKD", col).encode("ASCII", "ignore").decode("utf-8").strip().replace('\u00a0', '') for col in data.columns]
     data = data.rename(columns={"Prenom": "Prénom"})
 except Exception as e:
@@ -103,7 +103,7 @@ def index():
             exact_match = data[(data["Nom"] == nom_clean) & (data["Prénom"] == prenom_clean)]
             if not exact_match.empty:
                 clients = exact_match.to_dict(orient="records")
-                message = "⚠️ Ce client est non conforme ,merci de pas proceder à l'ouverture de son compte.Pour plus d'infomation contacter le service conformité."
+                message = "⚠️ Ce client est non conforme, merci de ne pas procéder à l'ouverture de son compte. Pour plus d'information contacter le service conformité."
             else:
                 # === RECHERCHE PARTIELLE SI PRÉNOM INCOMPLET
                 prenom_parts = prenom_clean.split()
