@@ -19,7 +19,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# ✅ Nouvelle version robuste de normalize_columns
+# Normalisation robuste des noms de colonnes
 def normalize_columns(df):
     def clean(col):
         return (
@@ -33,7 +33,7 @@ def normalize_columns(df):
 
     df.columns = [clean(col) for col in df.columns]
 
-    # Forcer les bons noms pour les colonnes critiques
+    # Renommer pour uniformiser
     for col in df.columns:
         if col.lower() in ['prenom', 'prénom']:
             df.rename(columns={col: 'Prénom'}, inplace=True)
@@ -44,6 +44,12 @@ def normalize_columns(df):
 
 def load_data():
     file_path = os.path.join(base_dir, "clients_non_conformes.xlsx")
+    print(f"DEBUG: Chemin du fichier Excel : {file_path}")
+    
+    if not os.path.exists(file_path):
+        print("ERREUR : fichier clients_non_conformes.xlsx introuvable !")
+        return pd.DataFrame()
+    
     try:
         df = pd.read_excel(file_path, header=1)
         df = normalize_columns(df)
@@ -53,7 +59,7 @@ def load_data():
         print(f"Erreur lors du chargement du fichier : {e}")
         return pd.DataFrame()
 
-# Chargement initial
+# Chargement initial des données
 data = load_data()
 
 @app.route('/admin', methods=['GET', 'POST'])
