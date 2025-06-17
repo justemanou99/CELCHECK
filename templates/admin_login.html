@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Connexion Administrateur - CELCHECK</title>
     <style>
         body {
@@ -13,7 +14,6 @@
             height: 100vh;
             margin: 0;
         }
-
         .login-container {
             background-color: white;
             padding: 30px;
@@ -22,11 +22,9 @@
             text-align: center;
             width: 350px;
         }
-
         h2 {
             color: #004080;
         }
-
         input[type="text"],
         input[type="password"] {
             width: 90%;
@@ -34,8 +32,8 @@
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 8px;
+            font-size: 16px;
         }
-
         input[type="submit"] {
             background-color: #004080;
             color: white;
@@ -45,33 +43,55 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
+            transition: background-color 0.3s ease;
         }
-
+        input[type="submit"]:hover {
+            background-color: #003366;
+        }
         .error {
             color: red;
             font-weight: bold;
+            margin-top: 10px;
         }
-
         img.logo {
             width: 80px;
             margin-bottom: 15px;
+            user-select: none;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="Logo CELPAID" class="logo">
-        <h2>Connexion Admin</h2>
+    <main class="login-container" role="main" aria-labelledby="login-title">
+        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="Logo CELPAID" class="logo" />
+        <h2 id="login-title">Connexion Admin</h2>
 
         {% if error %}
-            <p class="error">{{ error }}</p>
+            <p class="error" role="alert">{{ error }}</p>
         {% endif %}
 
-        <form method="POST">
-            <input type="text" name="username" placeholder="Nom d'utilisateur" required><br>
-            <input type="password" name="password" placeholder="Mot de passe" required><br>
-            <input type="submit" value="Se connecter">
+        <form method="POST" novalidate>
+            <label for="username" class="sr-only">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required autocomplete="username" autofocus />
+            <br />
+            <label for="password" class="sr-only">Mot de passe</label>
+            <input type="password" id="password" name="password" placeholder="Mot de passe" required autocomplete="current-password" />
+            <br />
+            <input type="submit" value="Se connecter" />
         </form>
-    </div>
+    </main>
 </body>
 </html>
+
+<style>
+    /* Pour cacher visuellement mais garder accessible les labels */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+</style>

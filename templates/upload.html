@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Uploader un fichier Excel - CELCHECK</title>
     <style>
         body {
@@ -25,10 +26,12 @@
 
         h2 {
             color: #004080;
+            margin-bottom: 20px;
         }
 
         input[type="file"] {
             margin-top: 15px;
+            font-size: 16px;
         }
 
         input[type="submit"] {
@@ -40,6 +43,10 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #003366;
         }
 
         .message {
@@ -54,33 +61,54 @@
 
         a {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 25px;
             text-decoration: none;
             color: #004080;
             font-weight: bold;
+            font-size: 14px;
+        }
+        a:hover {
+            text-decoration: underline;
         }
 
         img.logo {
             width: 80px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            user-select: none;
         }
     </style>
 </head>
 <body>
-    <div class="upload-container">
-        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="Logo CELPAID" class="logo">
-        <h2>Téléversement du fichier Excel</h2>
+    <main class="upload-container" role="main" aria-labelledby="upload-title">
+        <img src="https://th.bing.com/th/id/R.0256024b6c21e33e519e78b934f39b09?rik=FLuYRlwEUqRKzg&riu=http%3a%2f%2fcelpaidfinances.com%2fContent%2fimg%2flogo.png&ehk=wwapTacWgdiQhBFtBgppW3EpsxHx9QbMuJtiCmgnx0c%3d&risl=&pid=ImgRaw&r=0" alt="Logo CELPAID" class="logo" />
+        <h2 id="upload-title">Téléversement du fichier Excel</h2>
 
         {% if message %}
-            <p class="message {% if 'Erreur' in message %}error{% endif %}">{{ message }}</p>
+            <p class="message {% if 'Erreur' in message %}error{% endif %}" role="alert">{{ message }}</p>
         {% endif %}
 
-        <form method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".xlsx" required><br>
-            <input type="submit" value="Téléverser">
+        <form method="POST" enctype="multipart/form-data" novalidate>
+            <label for="file-upload" class="sr-only">Choisir un fichier Excel (.xlsx)</label>
+            <input type="file" id="file-upload" name="file" accept=".xlsx" required />
+            <br />
+            <input type="submit" value="Téléverser" />
         </form>
 
         <a href="{{ url_for('index') }}">← Retour à la page d'accueil</a>
-    </div>
+    </main>
+
+    <style>
+        /* Visually hidden but accessible */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+    </style>
 </body>
 </html>
